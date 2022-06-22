@@ -36,14 +36,24 @@
           <el-tag type="warning" v-if="scope.row.couponType==3">注册赠券</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="couponImg" header-align="center" align="center" label="优惠券图片"></el-table-column>
+      <el-table-column prop="couponImg" header-align="center" align="center" label="优惠券图片">
+        <template slot-scope="scope">
+          <!-- <el-image
+              style="width: 100px; height: 80px"
+              :src="scope.row.logo"
+          fit="fill"></el-image>-->
+          <img :src="scope.row.couponImg" style="width: 100px; height: 80px" />
+        </template>
+      </el-table-column>
       <el-table-column prop="couponName" header-align="center" align="center" label="优惠卷名字"></el-table-column>
       <el-table-column prop="num" header-align="center" align="center" label="数量"></el-table-column>
       <el-table-column prop="amount" header-align="center" align="center" label="金额"></el-table-column>
       <el-table-column prop="perLimit" header-align="center" align="center" label="每人限领张数"></el-table-column>
       <el-table-column prop="minPoint" header-align="center" align="center" label="使用门槛"></el-table-column>
-      <el-table-column prop="startTime" header-align="center" align="center" label="开始时间"></el-table-column>
-      <el-table-column prop="endTime" header-align="center" align="center" label="结束时间"></el-table-column>
+      <el-table-column prop="startTime" :formatter="formatDate" header-align="center" align="center" label="开始时间"></el-table-column>
+      <el-table-column prop="endTime" :formatter="formatDate" header-align="center" align="center" label="结束时间">
+
+      </el-table-column>
       <el-table-column prop="useType" header-align="center" align="center" label="使用类型">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.useType==0">全场通用</el-tag>
@@ -56,8 +66,8 @@
       <el-table-column prop="useCount" header-align="center" align="center" label="已使用数量"></el-table-column>
       <el-table-column prop="receiveCount" header-align="center" align="center" label="领取数量"></el-table-column>
       <el-table-column label="可以领取的日期">
-        <el-table-column prop="enableStartTime" header-align="center" align="center" label="开始日期"></el-table-column>
-        <el-table-column prop="enableEndTime" header-align="center" align="center" label="结束日期"></el-table-column>
+        <el-table-column prop="enableStartTime" :formatter="formatDate" header-align="center" align="center" label="开始日期"></el-table-column>
+        <el-table-column prop="enableEndTime" :formatter="formatDate" header-align="center" align="center" label="结束日期"></el-table-column>
       </el-table-column>
       <el-table-column prop="code" header-align="center" align="center" label="优惠码"></el-table-column>
       <el-table-column prop="memberLevel" header-align="center" align="center" label="领取所需等级">
@@ -119,6 +129,16 @@ export default {
     this.getMemberLevels();
   },
   methods: {
+    formatDate(row, column) {
+      // 获取单元格数据
+      let data = row[column.property]
+      if(data == null) {
+        return null
+      }
+      let dt = new Date(data)
+      return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate()
+      // return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate() + ' ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds()
+    },
     getLevel(level) {
       let name = this.memberLevels["level_" + level];
       if (name) {

@@ -35,13 +35,13 @@
         label="活动标题">
       </el-table-column>
       <el-table-column
-        prop="startTime"
+        prop="startTime" :formatter="formatDate"
         header-align="center"
         align="center"
         label="开始日期">
       </el-table-column>
       <el-table-column
-        prop="endTime"
+        prop="endTime" :formatter="formatDate"
         header-align="center"
         align="center"
         label="结束日期">
@@ -53,7 +53,7 @@
         label="上下线状态">
       </el-table-column>
       <el-table-column
-        prop="createTime"
+        prop="createTime" :formatter="formatDate"
         header-align="center"
         align="center"
         label="创建时间">
@@ -114,6 +114,17 @@
       this.getDataList()
     },
     methods: {
+
+      formatDate(row, column) {
+        // 获取单元格数据
+        let data = row[column.property]
+        if(data == null) {
+          return null
+        }
+        let dt = new Date(data)
+        return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate()
+        // return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate() + ' ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds()
+      },
       // 获取数据列表
       getDataList () {
         this.dataListLoading = true

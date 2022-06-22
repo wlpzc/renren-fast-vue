@@ -36,7 +36,7 @@
       <el-table-column prop="status" header-align="center" align="center" label="启用状态">
         <template slot-scope="scope">
           <el-switch
-            v-model="scope.row.status" 
+            v-model="scope.row.status"
             active-color="#13ce66"
             inactive-color="#ff4949"
             :active-value="1"
@@ -44,7 +44,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" header-align="center" align="center" label="注册时间"></el-table-column>
+      <el-table-column prop="createTime" :formatter="formatDate" header-align="center" align="center" label="注册时间"></el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small">送券</el-button>
@@ -90,6 +90,17 @@ export default {
     this.getDataList();
   },
   methods: {
+
+    formatDate(row, column) {
+      // 获取单元格数据
+      let data = row[column.property]
+      if(data == null) {
+        return null
+      }
+      let dt = new Date(data)
+      // return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate()
+      return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate() + ' ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds()
+    },
     // 获取数据列表
     getDataList() {
       this.dataListLoading = true;

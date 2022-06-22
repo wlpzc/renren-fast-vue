@@ -59,7 +59,7 @@
       <el-form-item label="发行数量" prop="publishCount">
         <el-input-number v-model="dataForm.publishCount" :min="0"></el-input-number>
       </el-form-item>
-      <el-form-item label="领取日期" prop="enableStartTime">
+      <el-form-item label="领取日期" prop="timeRange">
         <el-date-picker
           v-model="dataForm.timeRange"
           type="daterange"
@@ -131,9 +131,9 @@ export default {
             trigger: "blur"
           }
         ],
-        couponImg: [
-          { required: true, message: "优惠券图片不能为空", trigger: "blur" }
-        ],
+        // couponImg: [
+        //   { required: true, message: "优惠券图片不能为空", trigger: "blur" }
+        // ],
         couponName: [
           { required: true, message: "优惠卷名字不能为空", trigger: "blur" }
         ],
@@ -155,6 +155,20 @@ export default {
         note: [{ required: true, message: "备注不能为空", trigger: "blur" }],
         publishCount: [
           { required: true, message: "发行数量不能为空", trigger: "blur" }
+        ],
+        startTime: [
+          {
+            required: true,
+            message: "可以使用的开始日期不能为空",
+            trigger: "blur"
+          }
+        ],
+        endTime: [
+          {
+            required: true,
+            message: "可以使用的结束日期不能为空",
+            trigger: "blur"
+          }
         ],
         enableStartTime: [
           {
@@ -230,6 +244,10 @@ export default {
               this.dataForm.memberLevel = data.coupon.memberLevel;
               this.dataForm.publish = data.coupon.publish;
               this.dataForm.timeRange = [
+                this.dataForm.enableStartTime,
+                this.dataForm.enableEndTime
+              ];
+              this.dataForm.useTimeRange = [
                 this.dataForm.startTime,
                 this.dataForm.endTime
               ];

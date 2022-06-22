@@ -21,7 +21,13 @@
         <el-input v-model="dataForm.subTitle" placeholder="专题副标题"></el-input>
       </el-form-item>
       <el-form-item label="显示状态" prop="status">
-        <el-switch v-model="dataForm.status" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+        <el-switch
+          v-model="dataForm.status"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="1"
+          :inactive-value="0"
+        ></el-switch>
       </el-form-item>
       <el-form-item label="详情连接" prop="url">
         <el-input v-model="dataForm.url" placeholder="详情连接"></el-input>
@@ -52,7 +58,7 @@ export default {
         name: "",
         title: "",
         subTitle: "",
-        status: "",
+        status: 1,
         url: "",
         sort: "",
         img: ""
@@ -64,9 +70,9 @@ export default {
         title: [
           { required: true, message: "专题标题不能为空", trigger: "blur" }
         ],
-        subTitle: [
-          { required: true, message: "专题副标题不能为空", trigger: "blur" }
-        ],
+        // subTitle: [
+        //   { required: true, message: "专题副标题不能为空", trigger: "blur" }
+        // ],
         status: [
           { required: true, message: "显示状态不能为空", trigger: "blur" }
         ],
